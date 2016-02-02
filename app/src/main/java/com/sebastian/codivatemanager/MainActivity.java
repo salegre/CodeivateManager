@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if(fileNotExists(this, mFileName)) {
+        if(FirstRun.isFirstRun(this)) {
             Intent intent = new Intent(this, SetupActivity.class);
             startActivity(intent);
         }
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(!FirstRun.isFirstRun(this))
         updateDisplay();
     }
 
