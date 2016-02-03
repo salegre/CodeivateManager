@@ -1,9 +1,12 @@
 package com.sebastian.codivatemanager;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Sebastian on 29/01/2016.
  */
-public class User {
+public class User implements Parcelable{
     private String mName;
     private double mLevel;
     private double mFocusLevel;
@@ -49,4 +52,40 @@ public class User {
     public void setMaxStreak(int maxStreak) {
         mMaxStreak = maxStreak;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mName);
+        dest.writeDouble(mLevel);
+        dest.writeDouble(mFocusLevel);
+        dest.writeInt(mFocusPoints);
+        dest.writeInt(mMaxStreak);
+    }
+
+    private User(Parcel in) {
+        mName = in.readString();
+        mLevel = in.readDouble();
+        mFocusLevel = in.readDouble();
+        mFocusPoints = in.readInt();
+        mMaxStreak = in.readInt();
+    }
+
+    public User() { }
+
+    private static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

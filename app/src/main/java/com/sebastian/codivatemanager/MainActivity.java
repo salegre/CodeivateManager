@@ -1,17 +1,14 @@
 package com.sebastian.codivatemanager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -27,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     TextView levelLabel;
     @Bind(R.id.textViewLevel)
     TextView level;
-    @Bind(R.id.buttonFriends)
-    Button friends;
 
     private final String mFileName = "UserData";
 
@@ -41,30 +36,16 @@ public class MainActivity extends AppCompatActivity {
         if(FirstRun.isFirstRun(this)) {
             Intent intent = new Intent(this, SetupActivity.class);
             startActivity(intent);
+            finish();
+        } else {
+            updateDisplay();
         }
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!FirstRun.isFirstRun(this))
-        updateDisplay();
     }
 
     @OnClick(R.id.buttonFriends)
     public void intentFriends() {
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
-    }
-
-    //Checks for file existence
-    public boolean fileNotExists(Context context, String filename) {
-        File file = context.getFileStreamPath(filename);
-        if(file == null || !file.exists()) {
-            return true;
-        }
-        return false;
     }
 
     //Updates the UI
